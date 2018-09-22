@@ -14,6 +14,7 @@ class App extends Component {
       
       ActiveUser: {},
       Quiz_Info:null,
+      Quiz_starts:false,
       Quiz_index:null,
       Quiz: [
         {
@@ -518,7 +519,7 @@ class App extends Component {
   Quiz_start(quizIndex)
   {
 alert(quizIndex);
-this.setState({Quiz_index:quizIndex});
+this.setState({Quiz_index:quizIndex,Quiz_starts:true});
   }
 
   signup(firstName, lastName, email, password) {
@@ -553,17 +554,17 @@ this.setState({Quiz_index:quizIndex});
   }
 
   render() {
-    const {Quiz_Info, Quiz, user, ActiveUser } = this.state;
+    const {Quiz_starts,Quiz_Info, Quiz, user, ActiveUser, Quiz_index } = this.state;
     return (
       <div>
         {!Quiz_Info &&!user && <Login login1={this.login1} signup={this.signup} />}
         {user && "Welcome"}
         {console.log("asdasd**" + Quiz_Info)}
 {console.log("Quiz",Quiz)}
-     {user && !Quiz_Info && <Quiz_List  Info={this.Info} Quiz_List={Quiz}/>}
-     {Quiz_Info &&  user && <Quiz_Infoo Quiz_start={this.Quiz_start} Quiz_info={Quiz_Info} Quiz_list={Quiz}/> }
-     {<Quiz_start/>}
-    
+     {user && !Quiz_Info &&  !Quiz_starts && <Quiz_List  Info={this.Info} Quiz_List={Quiz}/>}
+     {!Quiz_starts && Quiz_Info &&  user && <Quiz_Infoo Quiz_start={this.Quiz_start} Quiz_info={Quiz_Info} Quiz_list={Quiz}/> }
+     {Quiz_starts &&  Quiz_Info && <Quiz_start Quiz_Info={Quiz_Info} Quiz_List={Quiz} Quiz_Index={Quiz_index}/>}
+    {console.log("apk",Quiz_Info)}
         {user && <button onClick={() => this.logout()}>log out</button>}
       </div>
     );
